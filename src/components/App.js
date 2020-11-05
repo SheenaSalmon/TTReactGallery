@@ -1,15 +1,20 @@
-import React,{Component} from 'react';
+import React,{Component,PureComponent} from 'react';
 import Nav from './Nav';
 import Search from './Search';
 import Photos from './Photos';
-import {Provider} from './Context';
 
+import Home from './Home';
+import NavResults from './NavResults';
+import {Provider} from './Context';
+import {BrowserRouter, Route,NavLink, Switch} from 'react-router-dom'
 import axios from 'axios';
+
+
 import apiKey from '../config'
 
 
 
-class App extends Component{
+class App extends PureComponent{
  state={
    photos:[]
  }
@@ -27,27 +32,47 @@ class App extends Component{
   .then(response => {
    this.setState({photos:response.data.photos.photo});
     //console.log(response.data.photos.photo);
-    console.log(this.state.photos);
+    // console.log(this.state.photos);
   }
     )
     .catch(
       (error)=>{
-        console.log(error);
+        console.log("You had an error",error);
       }
     )
  }
+//  shouldComponentUpdate(nextProps, nextState)
+//  {
+//   return this.state.photos != nextState.photos;
+//  }
+ 
+
 
   render()
   {
-    return <Provider value ={ {photos:this.state.photos}}>
+    return (
       <div className="container">
-      <Search searchForm={this.getPhotos}/>
+        
+      
+    <Search searchForm={this.getPhotos}/>
     
+    <BrowserRouter>
     <Nav />
-    <Photos photos={this.state.photos}/>
+    
+    <Switch>
+    <Route exact path="/" render={ () => this.getPhotos("cat")} />
+    {console.log("reload")}
 
-    </div>
-    </Provider>
+    <Route exact path="/cats" render={()=> this.getPhotos("cats") } />
+
+    <Route exact path="/dogs" render={ () => this.getPhotos("dog")}/>
+    <Route exact path="/birds" render={ () => this.getPhotos("bird")}/>
+    </Switch>
+    </BrowserRouter>
+    <Photos photos={this.state.photos}/>
+    
+    </div>)
+
   }
 
 

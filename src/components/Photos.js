@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Photo from './Photo';
 import NotFound from './NotFound';
 import Consumer from './Context';
@@ -6,20 +6,23 @@ import Consumer from './Context';
 const Photos =(props)=>
 { 
     
+    // const [newphotos, setNewPhotos]=useState();
     
-       const photos= props.photos.map( (photo) => {
+    // setNewPhotos(props.photos);
+    // console.log(newphotos);
+    
+   let photos=props.photos.map( (photo) => {
             console.log(photo.id);
             const url =`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
         //    console.log(url);
         //    console.log(photo['server']);
        return(
-        <Photo key ={photo.id.toString()} src={url} alt={photo.title} />) 
+        <Photo id ={photo.id.toString()} src={url} alt={photo.title} />) 
         }
         
         );
 
-
-    //console.log(props.photos);
+    console.log(props.photos);
     
 
     return(
