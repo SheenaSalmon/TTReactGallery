@@ -17,7 +17,7 @@ const Photos =(props)=>
         //    console.log(url);
         //    console.log(photo['server']);
        return(
-        <Photo id ={photo.id.toString()} src={url} alt={photo.title} />) 
+        <Photo key ={photo.id} src={url} alt={photo.title} />) 
         }
         
         );
@@ -28,7 +28,7 @@ const Photos =(props)=>
     return(
     
     <div className="photo-container">
-    <h2>Results</h2>
+  
     <ul>
         { photos.length > 0? photos : <NotFound />} 
         

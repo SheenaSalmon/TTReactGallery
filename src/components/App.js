@@ -32,10 +32,11 @@ class App extends PureComponent{
   {
   axios.get(queryNow)
   .then(response => {
-   this.setState({photos:response.data.photos.photo, query:queryNow,term:q})
+   this.setState({photos:response.data.photos.photo, query:queryNow,term:q,loading:false})
    
     //console.log(response.data.photos.photo);
    console.log(this.state.photos);
+
   }
     )
     .catch(
@@ -45,7 +46,10 @@ class App extends PureComponent{
     )}
  }
  
- 
+ componentDidMount()
+ {
+  this.getPhotos("cat");
+ }
 
 
   render()
@@ -73,7 +77,8 @@ class App extends PureComponent{
     <Route path="/search/:query"  render={() => <NavResults search={this.getPhotos} term={this.term} />} />
     </Switch>
     </BrowserRouter>
-    <Photos photos={this.state.photos}/>
+    <h2>{`${this.state.term} Gifs`}</h2>
+    {this.state.loading? "...loading":<Photos photos={this.state.photos}/>}
     
     </div>)
 
