@@ -16,35 +16,35 @@ import apiKey from '../config'
 
 class App extends PureComponent{
  state={
-   photos:[]
+   photos:[],
+   query:"",
+   term:"",
+   loading:true
  }
 
- componentDidMount()
- {
-   this.getPhotos();
-
- }
-  apiK=apiKey
+  apiK=apiKey;
  method="flickr.photos.search";
 
  getPhotos =(q="cats")=> {
-  axios.get(`https://api.flickr.com/services/rest?method=${this.method}&api_key=${this.apiK}&text=${q}&format=json&nojsoncallback=1`)
+   let queryNow=`https://api.flickr.com/services/rest?method=${this.method}&api_key=${this.apiK}&text=${q}&format=json&nojsoncallback=1&safe_search=3&content_type=1`;
+
+   if (this.state.query != queryNow)
+  {
+  axios.get(queryNow)
   .then(response => {
-   this.setState({photos:response.data.photos.photo});
+   this.setState({photos:response.data.photos.photo, query:queryNow,term:q})
+   
     //console.log(response.data.photos.photo);
-    // console.log(this.state.photos);
+   console.log(this.state.photos);
   }
     )
     .catch(
       (error)=>{
         console.log("You had an error",error);
       }
-    )
+    )}
  }
-//  shouldComponentUpdate(nextProps, nextState)
-//  {
-//   return this.state.photos != nextState.photos;
-//  }
+ 
  
 
 
@@ -54,9 +54,10 @@ class App extends PureComponent{
       <div className="container">
         
       
-    <Search searchForm={this.getPhotos}/>
+
     
     <BrowserRouter>
+    <Search searchForm={this.getPhotos}/>
     <Nav />
     
     <Switch>
@@ -65,8 +66,11 @@ class App extends PureComponent{
 
     <Route exact path="/cats" render={()=> this.getPhotos("cats") } />
 
-    <Route exact path="/dogs" render={ () => this.getPhotos("dog")}/>
+    <Route exact path="/flowers" render={ () => this.getPhotos("flowers")}/>
     <Route exact path="/birds" render={ () => this.getPhotos("bird")}/>
+    
+    {/* <Route path="/search/:query" render ={ this.getPhotos(this.props.match.params.query) } /> */}
+    <Route path="/search/:query"  render={() => <NavResults search={this.getPhotos} term={this.term} />} />
     </Switch>
     </BrowserRouter>
     <Photos photos={this.state.photos}/>

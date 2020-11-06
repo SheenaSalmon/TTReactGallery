@@ -12,7 +12,7 @@ const Photos =(props)=>
     // console.log(newphotos);
     
    let photos=props.photos.map( (photo) => {
-            console.log(photo.id);
+            // console.log(photo.id);
             const url =`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
         //    console.log(url);
         //    console.log(photo['server']);
@@ -22,7 +22,7 @@ const Photos =(props)=>
         
         );
 
-    console.log(props.photos);
+    // console.log(props.photos);
     
 
     return(

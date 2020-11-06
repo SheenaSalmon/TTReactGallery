@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-
+// import {useHistory} from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
 
  class Search extends Component
  {
@@ -17,7 +18,10 @@ import React,{Component} from 'react';
         e.preventDefault();
         this.props.searchForm(this.state.queryString);
         //this.setState({queryString:""})
+        let path=`/search/${this.state.queryString}`;
         e.target.reset();
+        // let history =useHistory();
+       this.props.history.push(path);
     }
     render()
     {
@@ -36,5 +40,5 @@ import React,{Component} from 'react';
     }
 
  }
-
-export default Search;
+ export default withRouter(Search)
+// export default Search;
