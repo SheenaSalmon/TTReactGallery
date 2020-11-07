@@ -17,7 +17,7 @@ const Photos =(props)=>
         //    console.log(url);
         //    console.log(photo['server']);
        return(
-        <Photo key ={photo.id} src={url} alt={photo.title} />) 
+        <Photo id ={photo.id} src={url} alt={photo.title} />) 
         }
         
         );
