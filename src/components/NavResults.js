@@ -3,13 +3,9 @@ import {useParams} from "react-router-dom"
 
 const NavResults =(props) =>
 {
-    // const [query,setquery]=useState();
-
-    // setquery(match.params.query);
-
-    // useEffect(()=>{
-    //     props.search(query);
-    // },[query])
+  
+    //Part of the Search Route 
+    //A work around that allows the search to be called again when using the back button
     let { query} = useParams();
        return ( <React.Fragment> { props.search(query)}  </React.Fragment>  )
 
