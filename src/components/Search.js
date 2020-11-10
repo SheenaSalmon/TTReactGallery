@@ -40,4 +40,5 @@ import { withRouter } from 'react-router-dom'
     }
 
  }
+ //Get history object propperties
  export default withRouter(Search)

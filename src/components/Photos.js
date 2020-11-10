@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Photo from './Photo';
 import NotFound from './NotFound';
 
@@ -12,7 +12,8 @@ const Photos =(props)=>
             const url =`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
       
        return(
-        <Photo id ={photo.id} src={url} alt={photo.title} />) 
+           <li key={photo.id}>
+        <Photo id ={photo.id} src={url} alt={photo.title} /></li>) 
         }
         
         );

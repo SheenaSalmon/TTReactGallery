@@ -1,4 +1,4 @@
-import React,{Component,PureComponent} from 'react';
+import React,{PureComponent} from 'react';
 import Nav from './Nav';
 import Search from './Search';
 import Photos from './Photos';
@@ -6,7 +6,7 @@ import Photos from './Photos';
 
 import NavResults from './NavResults';
 
-import {BrowserRouter, Route,NavLink, Switch} from 'react-router-dom'
+import {BrowserRouter, Route,Switch} from 'react-router-dom'
 import axios from 'axios';
 
 
@@ -25,12 +25,12 @@ class App extends PureComponent{
   apiK=apiKey;
  method="flickr.photos.search";
 
- //Fet the photo and add to state, if the argument is not use then use "cat"
+ //Get the photo and add to state, if the argument is not use then use "cat"
  getPhotos =(q="cats")=> {
    let queryNow=`https://api.flickr.com/services/rest?method=${this.method}&api_key=${this.apiK}&text=${q}&format=json&nojsoncallback=1&safe_search=3&content_type=1`;
 
    //checks if the query was call for this render or the api call will be made repeatedly
-   if (this.state.query != queryNow)
+   if (this.state.query !== queryNow)
   {
   axios.get(queryNow)
   .then(response => {
@@ -50,6 +50,11 @@ class App extends PureComponent{
   this.getPhotos("cat");
  }
 
+//  loadPhotos(photquery)
+//  {
+//    this.getPhotos(photquery)
+//   this.state.loading? "...loading":<Photos photos={this.state.photos}/>
+//  }
 
   render()
   {
@@ -64,8 +69,8 @@ class App extends PureComponent{
     <Nav />
     
     <Switch>
-    <Route exact path="/" render={ () => this.getPhotos("cat")} />
-    {console.log("reload")}
+    <Route exact path="/" render={ () => this.getPhotos("cat") } />
+    {/* {console.log("reload")} */}
 
     <Route exact path="/cats" render={()=> this.getPhotos("cats") } />
 
@@ -78,8 +83,8 @@ class App extends PureComponent{
     <h2>{`${this.state.term} Gifs`}</h2>
     {/* This checks that it is not loading and then displays the photos component, or then their will be an error with the key 
     property */}
-    {this.state.loading? "...loading":<Photos photos={this.state.photos}/>}
-    
+    {this.state.loading? "...loading":  <Photos photos={this.state.photos}/>}
+   
     </div>)
 
   }
